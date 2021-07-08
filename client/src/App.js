@@ -14,4 +14,4 @@ function App() {
   );
 }
 
-export defagei ult App;
+export default App;
