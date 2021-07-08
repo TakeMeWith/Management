@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.get('/api/hello', (req,res) => {
-    res.send({message : 'Please!'});
+    res.send({message : 'Yahaha'});
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
