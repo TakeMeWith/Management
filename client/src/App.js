@@ -62,7 +62,7 @@ class App extends Component {
               <TableCell>이름</TableCell>
               <TableCell>생년원일</TableCell>
               <TableCell>성별</TableCell>
-              <TableCell>직업</TableCell>
+              <TableCell>직업2</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
