@@ -10,7 +10,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { ThemeProvider, withStyles } from '@material-ui/core/styles';
+
 
 const styles = ({
   root : ({
@@ -20,6 +22,9 @@ const styles = ({
   }),
   table : {
     minWidth : 1080
+  },
+  progress : {
+    
   }
 })
 
@@ -27,13 +32,12 @@ const styles = ({
 class App extends Component {
 
   state = {
-    customers : ""
+    customers : "",
+    completed : 0
   }
   
   componentDidMount() {
-    this.callApi()
-    .then(res => this.setState({customers:res}))
-    .catch(err => console.log(err));
+    this.timer = setInterval(this.progress, 20);
   }
 
   callApi = async() => {
@@ -41,6 +45,11 @@ class App extends Component {
     const response = await fetch('http://localhost:5000/api/customers');
     const body = await response.json();
     return body;
+  }
+
+  progress = () => {
+    const {completed }= this.state;
+    this.setState({completed : completed >= 200 ? 0 : completed + 1});
   }
 
   render(){
@@ -61,7 +70,13 @@ class App extends Component {
           <TableBody>
           {this.state.customers ? this.state.customers.map( c => { 
             return (  <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} /> ); 
-            })  : ""}
+            })  : 
+            <TableRow>
+              <TableCell colSpan="6" align="center">
+                <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed}/>
+              </TableCell>
+            </TableRow>
+            }
           </TableBody>
         </Table>
       </Paper>
